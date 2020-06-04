@@ -1,9 +1,9 @@
 import React from 'react'
-import classes from "./BurgerIngredient.css"
+import classes from "./BurgerIngredient.module.css"
 
 export default function BurgerIngredient() {
     return (
-        <div className={classes.BreadBottom}>
+        <div>
             
         </div>
     )

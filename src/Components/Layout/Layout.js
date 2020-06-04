@@ -1,6 +1,6 @@
 import React from 'react'
 import Wrapper from "../../hoc/wrapper"
-import classes from "./Layout.css"
+import classes from "./Layout.module.css"
 
 const Layout = (props) => {
     return (
