@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import BurgerIngredients from "../../Components/Burger/BurgerIngredient"
+import Burger from "../../Components/Burger/Burger"
 import Wrapper from "../../hoc/wrapper"
 
 class BurgerBuilder extends Component {
     render() {
         return (
             <Wrapper>
-           <BurgerIngredients/>
-           </Wrapper>
+                <Burger />
+                <div>Burger Controls </div>
+            </Wrapper>
         )
     }
 }
