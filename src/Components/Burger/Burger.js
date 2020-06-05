@@ -4,12 +4,18 @@ import BurgerIngredient from "./BurgerIngredient/BurgerIngredient"
  
 const Burger = (props)=> {
 
-    const stateIngredients = Object.keys(props.ingredients)
+    let stateIngredients = Object.keys(props.ingredients)
     .map(igKey =>{return [...Array(props.ingredients[igKey])]
-        .map((_, i)=>{
-            return <BurgerIngredient key={igKey + i} type={igKey}/>
-        });
-    });
+        .map((_, i)=>{ return <BurgerIngredient key={igKey + i} type={igKey}/>});
+    }).reduce((prev,current)=>{
+        return prev.concat(current)
+    },
+    []);
+
+    if (stateIngredients.length === 0) {
+        stateIngredients =<p>Please start adding ingredients!</p>;
+      }
+    
 
     return (
         <div className={Classes.Burger}>
