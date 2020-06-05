@@ -5,9 +5,10 @@ import BurgerIngredient from "./BurgerIngredient/BurgerIngredient"
 const Burger= (props)=> {
     return (
         <div className={Classes.Burger}>
-            <BurgerIngredient type="BreadTop"/>
-            <BurgerIngredient type="Meat"/>
-            <BurgerIngredient type="Cheese"/>
+            <BurgerIngredient type="bread-top"/>
+            <BurgerIngredient type="meat"/>
+            <BurgerIngredient type="cheese"/>
+            <BurgerIngredient type="bread-bottom"/>
         </div>
     )
 }
