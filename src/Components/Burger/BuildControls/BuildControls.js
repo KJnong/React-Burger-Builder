@@ -18,6 +18,7 @@ export default function BuildControls(props) {
                 key={ctrl.label} 
                 label={ctrl.label}
                 added ={()=>props.addIngredient(ctrl.type)}
+                removed ={()=>props.removeIngredient(ctrl.type)}
                 />)}
         </div>
     )
