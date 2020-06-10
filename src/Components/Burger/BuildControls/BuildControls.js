@@ -19,6 +19,7 @@ export default function BuildControls(props) {
                 label={ctrl.label}
                 added ={()=>props.addIngredient(ctrl.type)}
                 removed ={()=>props.removeIngredient(ctrl.type)}
+                buttonDisplayInfo = {props.buttonDisplayInfo[ctrl.type]}
                 />)}
         </div>
     )
