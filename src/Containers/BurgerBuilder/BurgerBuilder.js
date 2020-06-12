@@ -18,8 +18,18 @@ class BurgerBuilder extends Component {
             salad: 0,
             bacon: 0,
         },
-        price: 15
+        price: 15,
+        orderPermission: false
     }
+
+    updateOrderPermission(newIngredients){
+        const items = {...newIngredients}
+        const sum = Object.keys(items)
+                        .map(igKey => items[igKey] )
+                        .reduce((sum, current)=> sum + current , 0);
+        this.setState({orderPermission: sum > 0})              
+    }
+
 
     addIngredient = (type) => {
         const newIngredients = { ...this.state.ingredients }
@@ -28,6 +38,7 @@ class BurgerBuilder extends Component {
         const newPrice = this.state.price + INGREDIENT_PRICES[type]
 
         this.setState({ ingredients: newIngredients, price: newPrice })
+        this.updateOrderPermission(newIngredients)
     }
 
     removeIngredient = (type) => {
@@ -41,6 +52,7 @@ class BurgerBuilder extends Component {
         const newPrice = this.state.price - INGREDIENT_PRICES[type]
 
         this.setState({ ingredients: newIngredients, price: newPrice })
+        this.updateOrderPermission(newIngredients)
     }
 
     render() {
@@ -57,6 +69,7 @@ class BurgerBuilder extends Component {
                     removeIngredient={this.removeIngredient}
                     buttonDisplayInfo={buttonDisplayInfo}
                     price = {this.state.price}
+                    orderPermission = {this.state.orderPermission}
                 />
             </Wrapper>
         )

@@ -22,6 +22,10 @@ export default function BuildControls(props) {
                     removed={() => props.removeIngredient(ctrl.type)}
                     buttonDisplayInfo={props.buttonDisplayInfo[ctrl.type]}
                 />)}
+
+            <button className={Classes.OrderButton} disabled={!props.orderPermission}>
+                ORDER NOW
+                </button>        
         </div>
     )
 }
