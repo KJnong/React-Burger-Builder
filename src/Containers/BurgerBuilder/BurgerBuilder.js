@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Burger from "../../Components/Burger/Burger"
 import Wrapper from "../../hoc/wrapper"
 import BuildControls from "../../Components/Burger/BuildControls/BuildControls"
+import Modal from '../../Components/UI/Modal/Modal'
+import OrderSummary from '../../Components/Burger/OrderSummary/OrderSummary'
 
 const INGREDIENT_PRICES = {
     meat: 15,
@@ -22,12 +24,12 @@ class BurgerBuilder extends Component {
         orderPermission: false
     }
 
-    updateOrderPermission(newIngredients){
-        const items = {...newIngredients}
+    updateOrderPermission(newIngredients) {
+        const items = { ...newIngredients }
         const sum = Object.keys(items)
-                        .map(igKey => items[igKey] )
-                        .reduce((sum, current)=> sum + current , 0);
-        this.setState({orderPermission: sum > 0})              
+            .map(igKey => items[igKey])
+            .reduce((sum, current) => sum + current, 0);
+        this.setState({ orderPermission: sum > 0 })
     }
 
 
@@ -63,13 +65,16 @@ class BurgerBuilder extends Component {
         }
         return (
             <Wrapper>
+                <Modal>
+                    <OrderSummary order={this.state.ingredients} />
+                </Modal>
                 <Burger ingredients={this.state.ingredients} />
-                <BuildControls 
+                <BuildControls
                     addIngredient={this.addIngredient}
                     removeIngredient={this.removeIngredient}
                     buttonDisplayInfo={buttonDisplayInfo}
-                    price = {this.state.price}
-                    orderPermission = {this.state.orderPermission}
+                    price={this.state.price}
+                    orderPermission={this.state.orderPermission}
                 />
             </Wrapper>
         )
