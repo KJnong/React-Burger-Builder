@@ -62,6 +62,12 @@ class BurgerBuilder extends Component {
         this.setState({orderMode:true})
     }
 
+    orderCancellationHandler = ()=>{
+        this.setState({orderMode:false})
+    }
+
+
+
     render() {
         const buttonDisplayInfo = { ...this.state.ingredients }
 
@@ -70,7 +76,7 @@ class BurgerBuilder extends Component {
         }
         return (
             <Wrapper>
-                <Modal show = {this.state.orderMode}>
+                <Modal show = {this.state.orderMode} modalClosed = {this.orderCancellationHandler}>
                     <OrderSummary order={this.state.ingredients} />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
