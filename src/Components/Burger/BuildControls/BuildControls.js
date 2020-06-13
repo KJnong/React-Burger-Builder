@@ -23,7 +23,7 @@ export default function BuildControls(props) {
                     buttonDisplayInfo={props.buttonDisplayInfo[ctrl.type]}
                 />)}
 
-            <button className={Classes.OrderButton} disabled={!props.orderPermission}>
+            <button onClick={props.ordered} className={Classes.OrderButton} disabled={!props.orderPermission}>
                 ORDER NOW
                 </button>        
         </div>

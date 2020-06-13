@@ -21,7 +21,8 @@ class BurgerBuilder extends Component {
             bacon: 0,
         },
         price: 15,
-        orderPermission: false
+        orderPermission: false,
+        orderMode:false
     }
 
     updateOrderPermission(newIngredients) {
@@ -57,6 +58,10 @@ class BurgerBuilder extends Component {
         this.updateOrderPermission(newIngredients)
     }
 
+    orderModeHandler =()=>{
+        this.setState({orderMode:true})
+    }
+
     render() {
         const buttonDisplayInfo = { ...this.state.ingredients }
 
@@ -65,7 +70,7 @@ class BurgerBuilder extends Component {
         }
         return (
             <Wrapper>
-                <Modal>
+                <Modal show = {this.state.orderMode}>
                     <OrderSummary order={this.state.ingredients} />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
@@ -75,6 +80,7 @@ class BurgerBuilder extends Component {
                     buttonDisplayInfo={buttonDisplayInfo}
                     price={this.state.price}
                     orderPermission={this.state.orderPermission}
+                    ordered ={this.orderModeHandler}
                 />
             </Wrapper>
         )
