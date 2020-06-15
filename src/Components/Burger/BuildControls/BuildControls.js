@@ -13,7 +13,7 @@ const controls = [
 export default function BuildControls(props) {
     return (
         <div className={Classes.BuildControls}>
-            <p>Price : <strong>{props.price}</strong></p>
+            <p>Price : <strong>R{props.price}</strong></p>
             {controls.map(ctrl =>
                 <BuildControl
                     key={ctrl.label}

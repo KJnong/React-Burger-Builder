@@ -22,7 +22,7 @@ class BurgerBuilder extends Component {
         },
         price: 15,
         orderPermission: false,
-        orderMode:false
+        orderMode: false
     }
 
     updateOrderPermission(newIngredients) {
@@ -58,12 +58,16 @@ class BurgerBuilder extends Component {
         this.updateOrderPermission(newIngredients)
     }
 
-    orderModeHandler =()=>{
-        this.setState({orderMode:true})
+    orderModeHandler = () => {
+        this.setState({ orderMode: true })
     }
 
-    orderCancellationHandler = ()=>{
-        this.setState({orderMode:false})
+    orderCancellationHandler = () => {
+        this.setState({ orderMode: false })
+    }
+
+    continueOrderHandler = () => {
+        alert('You clicked on continue')
     }
 
 
@@ -76,8 +80,12 @@ class BurgerBuilder extends Component {
         }
         return (
             <Wrapper>
-                <Modal show = {this.state.orderMode} modalClosed = {this.orderCancellationHandler}>
-                    <OrderSummary order={this.state.ingredients} />
+                <Modal show={this.state.orderMode} modalClosed={this.orderCancellationHandler}>
+                    <OrderSummary
+                        price={this.state.price}
+                        order={this.state.ingredients}
+                        continueOrder={this.continueOrderHandler}
+                        cancelOrder={this.orderCancellationHandler} />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
                 <BuildControls
@@ -86,7 +94,7 @@ class BurgerBuilder extends Component {
                     buttonDisplayInfo={buttonDisplayInfo}
                     price={this.state.price}
                     orderPermission={this.state.orderPermission}
-                    ordered ={this.orderModeHandler}
+                    ordered={this.orderModeHandler}
                 />
             </Wrapper>
         )
