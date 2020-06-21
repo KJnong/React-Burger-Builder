@@ -9,10 +9,7 @@ class Layout extends React.Component {
         showSideDrawer: false
     }
 
-    toggleOpenHandler = () => {
-        this.setState({ showSideDrawer: true });
-    }
-
+    
     sideDrawerClosedHandler = () => {
         this.setState({ showSideDrawer: false });
     }
@@ -23,10 +20,14 @@ class Layout extends React.Component {
         });
     }
 
+    // toggleOpenHandler = () => {
+    //     this.setState({ showSideDrawer: true });
+    // }
+
     render() {
         return (
             <Wrapper>
-                <Toolbar toggle={this.toggleOpenHandler}/>
+                <Toolbar DrawToggleClicked={this.sideDrawerToggleHandler}/>
                 <SideDrawer
                     open={this.state.showSideDrawer}
                     closed={this.sideDrawerClosedHandler} />
