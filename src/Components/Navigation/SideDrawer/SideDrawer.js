@@ -12,7 +12,6 @@ const SideDrawer = (props) => {
         if (props.open) {
             attachedClasses = [classes.SideDrawer, classes.Open];
         }
-
         return (
             <Wrapper>
                 <BackDrop show={props.open} clicked={props.closed} />
@@ -24,10 +23,6 @@ const SideDrawer = (props) => {
                         <NavigationItems />
                     </nav>
                 </div>
-
-
-
-
             </Wrapper>
         )
     }

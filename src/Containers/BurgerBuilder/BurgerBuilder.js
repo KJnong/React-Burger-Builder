@@ -4,6 +4,7 @@ import Wrapper from "../../hoc/wrapper"
 import BuildControls from "../../Components/Burger/BuildControls/BuildControls"
 import Modal from '../../Components/UI/Modal/Modal'
 import OrderSummary from '../../Components/Burger/OrderSummary/OrderSummary'
+import axios from "../../axios-orders"
 
 const INGREDIENT_PRICES = {
     meat: 15,
@@ -66,8 +67,29 @@ class BurgerBuilder extends Component {
         this.setState({ orderMode: false })
     }
 
-    continueOrderHandler = () => {
-        alert('You clicked on continue')
+    continueOrderHandler = async() => {
+        const order = {
+            ingredients: this.state.ingredients,
+            price : this.state.price,
+            customer : {
+                name: "Jethro Nong",
+                adress : {
+                    street: "Von Willich",
+                    city:"Centurion",
+                    post:'0062'
+                },
+            email:"nongjethro@gmail.com"    
+            },
+            deliveryMethod: "Delivery"
+        }
+        // alert('You clicked on continue')
+
+        await axios.post("/orders.json", order)
+        .then((response)=>{
+            console.log(response);
+        }).catch(error=>{
+            console.log(error);
+        })
     }
 
 
