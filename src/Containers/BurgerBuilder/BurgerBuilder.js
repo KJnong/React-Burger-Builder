@@ -5,6 +5,8 @@ import BuildControls from "../../Components/Burger/BuildControls/BuildControls"
 import Modal from '../../Components/UI/Modal/Modal'
 import OrderSummary from '../../Components/Burger/OrderSummary/OrderSummary'
 import axios from "../../axios-orders"
+import Spinner from "../../assets/Spinner/Spinner"
+import WrapperComponent from "../../hoc/withErrorHandler/withErrorHandler"
 
 const INGREDIENT_PRICES = {
     meat: 15,
@@ -15,15 +17,23 @@ const INGREDIENT_PRICES = {
 class BurgerBuilder extends Component {
 
     state = {
-        ingredients: {
-            meat: 0,
-            cheese: 0,
-            salad: 0,
-            bacon: 0,
-        },
+        ingredients: null,
         price: 15,
         orderPermission: false,
-        orderMode: false
+        orderMode: false,
+        spinner: false,
+        error: false
+        
+    }
+    
+    async componentDidMount(){
+       
+        await axios.get("/ingredients.json").then(response =>{
+            this.setState({ingredients: response.data})
+
+        }).catch(error =>{
+            this.setState({error: true})
+        })
     }
 
     updateOrderPermission(newIngredients) {
@@ -68,6 +78,8 @@ class BurgerBuilder extends Component {
     }
 
     continueOrderHandler = async() => {
+        this.setState({spinner: true})
+
         const order = {
             ingredients: this.state.ingredients,
             price : this.state.price,
@@ -84,10 +96,16 @@ class BurgerBuilder extends Component {
         }
         // alert('You clicked on continue')
 
+
         await axios.post("/orders.json", order)
         .then((response)=>{
+            this.setState({spinner: false});
+            this.setState({orderMode: false})
             console.log(response);
+            
         }).catch(error=>{
+            this.setState({spinner: false});
+            this.setState({orderMode: false})
             console.log(error);
         })
     }
@@ -95,20 +113,16 @@ class BurgerBuilder extends Component {
 
 
     render() {
+        
         const buttonDisplayInfo = { ...this.state.ingredients }
 
         for (let key in buttonDisplayInfo) {
             buttonDisplayInfo[key] = buttonDisplayInfo[key] <= 0
         }
-        return (
+
+
+        const burger = this.state.ingredients? (
             <Wrapper>
-                <Modal show={this.state.orderMode} modalClosed={this.orderCancellationHandler}>
-                    <OrderSummary
-                        price={this.state.price}
-                        order={this.state.ingredients}
-                        continueOrder={this.continueOrderHandler}
-                        cancelOrder={this.orderCancellationHandler} />
-                </Modal>
                 <Burger ingredients={this.state.ingredients} />
                 <BuildControls
                     addIngredient={this.addIngredient}
@@ -119,8 +133,23 @@ class BurgerBuilder extends Component {
                     ordered={this.orderModeHandler}
                 />
             </Wrapper>
+        ) :  this.state.error? <p>Failed to laod ingredients</p> : <Spinner/>
+
+        const  OrderDisplay= this.state.spinner? <Spinner/> : <OrderSummary
+        price={this.state.price}
+        order={this.state.ingredients}
+        continueOrder={this.continueOrderHandler}
+        cancelOrder={this.orderCancellationHandler} /> 
+        
+        return (
+            <Wrapper>
+                <Modal show={this.state.orderMode} modalClosed={this.orderCancellationHandler}>
+                    { OrderDisplay}
+                </Modal>
+                {burger}
+            </Wrapper>
         )
     }
 }
 
-export default BurgerBuilder;
+export default WrapperComponent(BurgerBuilder, axios);
