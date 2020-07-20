@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from "./Components/Layout/Layout"
 import BurgerBuilder from "./Containers/BurgerBuilder/BurgerBuilder"
 import Checkout from './Containers/Checkout/Checkout'
+import Orders from "./Containers/Orders/Orders"
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,6 +16,7 @@ class App extends React.Component {
       <Layout>
         <Switch>
           <Route path="/checkout" component={Checkout} />
+          <Route path="/orders" component={Orders} />
           <Route exact path="/" component={BurgerBuilder} />
         </Switch>
       </Layout>
