@@ -49,14 +49,17 @@ export default class InfoData extends Component {
                 },
                 value: ""
             },
-            // deliveryMethod: {
-            //     elementType: 'select',
-            //     elementConfiq:{
-            //         type: "text",
-            //         placeholder: "Your Name"
-            //     },
-            //     value: ""
-            // }
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfiq:{
+                    options:[
+                        {displayValue: 'Select'},
+                        {value: 'standard', displayValue: 'Standard'},
+                        {value: 'fastest', displayValue: 'Fastest'}
+                    ]
+                },
+                value: ""
+            }
 
         },
         loading: false
@@ -83,6 +86,15 @@ export default class InfoData extends Component {
 
 
     }
+
+    inputChangedHandler = (event,inputIdentifier)=>{
+        const updatedOrderForm = {...this.state.orderForm}
+
+        const updatedFormElement = {...updatedOrderForm[inputIdentifier]}
+        updatedFormElement.value= event.target.value;
+        updatedOrderForm[inputIdentifier] = updatedFormElement;
+        this.setState({orderForm: updatedOrderForm})
+    }
     render() {
 
         const formElementsArray = [];
@@ -100,7 +112,8 @@ export default class InfoData extends Component {
                         key={formElement.id}
                         inputType={formElement.config.elementType}
                         elementConfiq={formElement.config.elementConfiq}
-                        value={formElement.config.value} />
+                        value={formElement.config.value}
+                        changed = {(event)=>this.inputChangedHandler(event,formElement.id)} />
                 ))}
                 <Butten clicked={this.OrderHandler} btnType="Success">ORDER</Butten>
             </form>

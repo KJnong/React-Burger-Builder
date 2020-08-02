@@ -6,11 +6,31 @@ const inputs = (props)=> {
 
     switch (props.inputType) {
         case "input":
-            inputElement= <input className={classes.InputElement} {...props.elementConfiq}/>
+            inputElement= <input 
+                            className={classes.InputElement} 
+                            {...props.elementConfiq}
+                            onChange={props.changed}
+                            />
             break;
 
         case "textarea":
-            inputElement= <textarea className={classes.InputElement} {...props.elementConfiq}/>
+            inputElement= <textarea
+                             className={classes.InputElement} 
+                             {...props.elementConfiq}
+                            onChange={props.changed} 
+                             />
+            break;  
+            
+        case "select":
+            inputElement= <select className={classes.InputElement }
+                            onChange={props.changed} 
+                            {...props.elementConfiq}>
+                            {props.elementConfiq.options.map(option =>(
+                                <option key ={option.value} value={option.value}>
+                                    {option.displayValue}
+                                </option>
+                            ))}         
+                           </select>
             break;    
     
         default:

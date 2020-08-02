@@ -17,24 +17,39 @@ const INGREDIENT_PRICES = {
 class BurgerBuilder extends Component {
 
     state = {
-        ingredients: null,
+        ingredients: {
+            meat: 0,
+            bacon: 0,
+            cheese: 0,
+            salad: 0
+        },
         price: 15,
         orderPermission: false,
         orderMode: false,
         spinner: false,
         error: false
-        
-    }
-    
-    async componentDidMount(){
-       
-        await axios.get("/ingredients.json").then(response =>{
-            this.setState({ingredients: response.data})
 
-        }).catch(error =>{
-            this.setState({error: true})
-        })
     }
+
+    // state = {
+    //     ingredients: null,
+    //     price: 15,
+    //     orderPermission: false,
+    //     orderMode: false,
+    //     spinner: false,
+    //     error: false
+
+    // }
+
+    // async componentDidMount(){
+
+    //     await axios.get("/ingredients.json").then(response =>{
+    //         this.setState({ingredients: response.data})
+
+    //     }).catch(error =>{
+    //         this.setState({error: true})
+    //     })
+    // }
 
     updateOrderPermission(newIngredients) {
         const items = { ...newIngredients }
@@ -77,7 +92,7 @@ class BurgerBuilder extends Component {
         this.setState({ orderMode: false })
     }
 
-    continueOrderHandler = async() => {
+    continueOrderHandler = async () => {
         // this.setState({spinner: true})
 
         // const order = {
@@ -101,7 +116,7 @@ class BurgerBuilder extends Component {
         //     this.setState({spinner: false});
         //     this.setState({orderMode: false})
         //     console.log(response);
-            
+
         // }).catch(error=>{
         //     this.setState({spinner: false});
         //     this.setState({orderMode: false})
@@ -125,7 +140,7 @@ class BurgerBuilder extends Component {
 
 
     render() {
-        
+
         const buttonDisplayInfo = { ...this.state.ingredients }
 
         for (let key in buttonDisplayInfo) {
@@ -133,7 +148,7 @@ class BurgerBuilder extends Component {
         }
 
 
-        const burger = this.state.ingredients? (
+        const burger = this.state.ingredients ? (
             <Wrapper>
                 <Burger ingredients={this.state.ingredients} />
                 <BuildControls
@@ -145,18 +160,18 @@ class BurgerBuilder extends Component {
                     ordered={this.orderModeHandler}
                 />
             </Wrapper>
-        ) :  this.state.error? <p>Failed to laod ingredients</p> : <Spinner/>
+        ) : this.state.error ? <p>Failed to laod ingredients</p> : <Spinner />
 
-        const  OrderDisplay= this.state.spinner? <Spinner/> : <OrderSummary
-        price={this.state.price}
-        order={this.state.ingredients}
-        continueOrder={this.continueOrderHandler}
-        cancelOrder={this.orderCancellationHandler} /> 
-        
+        const OrderDisplay = this.state.spinner ? <Spinner /> : <OrderSummary
+            price={this.state.price}
+            order={this.state.ingredients}
+            continueOrder={this.continueOrderHandler}
+            cancelOrder={this.orderCancellationHandler} />
+
         return (
             <Wrapper>
                 <Modal show={this.state.orderMode} modalClosed={this.orderCancellationHandler}>
-                    { OrderDisplay}
+                    {OrderDisplay}
                 </Modal>
                 {burger}
             </Wrapper>
