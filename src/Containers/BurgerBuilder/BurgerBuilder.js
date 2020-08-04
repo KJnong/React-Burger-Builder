@@ -16,23 +16,14 @@ const INGREDIENT_PRICES = {
 }
 class BurgerBuilder extends Component {
 
-    state = {
-        ingredients: {
-            meat: 0,
-            bacon: 0,
-            cheese: 0,
-            salad: 0
-        },
-        price: 15,
-        orderPermission: false,
-        orderMode: false,
-        spinner: false,
-        error: false
-
-    }
-
+    // When there is no wifi connection
     // state = {
-    //     ingredients: null,
+    //     ingredients: {
+    //         meat: 0,
+    //         bacon: 0,
+    //         cheese: 0,
+    //         salad: 0
+    //     },
     //     price: 15,
     //     orderPermission: false,
     //     orderMode: false,
@@ -41,15 +32,25 @@ class BurgerBuilder extends Component {
 
     // }
 
-    // async componentDidMount(){
+    state = {
+        ingredients: null,
+        price: 15,
+        orderPermission: false,
+        orderMode: false,
+        spinner: false,
+        error: false
 
-    //     await axios.get("/ingredients.json").then(response =>{
-    //         this.setState({ingredients: response.data})
+    }
 
-    //     }).catch(error =>{
-    //         this.setState({error: true})
-    //     })
-    // }
+    async componentDidMount(){
+
+        await axios.get("/ingredients.json").then(response =>{
+            this.setState({ingredients: response.data})
+
+        }).catch(error =>{
+            this.setState({error: true})
+        })
+    }
 
     updateOrderPermission(newIngredients) {
         const items = { ...newIngredients }

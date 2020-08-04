@@ -25,8 +25,8 @@ const inputs = (props)=> {
             inputElement= <select className={classes.InputElement }
                             onChange={props.changed} 
                             {...props.elementConfiq}>
-                            {props.elementConfiq.options.map(option =>(
-                                <option key ={option.value} value={option.value}>
+                            {props.elementConfiq.options.map((option, index) =>(
+                                <option key ={index} value={option.value}>
                                     {option.displayValue}
                                 </option>
                             ))}         

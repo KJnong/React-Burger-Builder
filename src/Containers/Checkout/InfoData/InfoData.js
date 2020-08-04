@@ -71,7 +71,8 @@ export default class InfoData extends Component {
 
         const order = {
             ingredients: this.props.ingredients,
-            price: this.props.price
+            price: this.props.price,
+            
         }
 
 
@@ -106,7 +107,7 @@ export default class InfoData extends Component {
         }
 
         let form = !this.state.loading ? (
-            <form>
+            <form onSubmit={this.OrderHandler}>
                 {formElementsArray.map(formElement =>(
                     <Input
                         key={formElement.id}
@@ -115,7 +116,7 @@ export default class InfoData extends Component {
                         value={formElement.config.value}
                         changed = {(event)=>this.inputChangedHandler(event,formElement.id)} />
                 ))}
-                <Butten clicked={this.OrderHandler} btnType="Success">ORDER</Butten>
+                <Butten  btnType="Success">ORDER</Butten>
             </form>
         ) : <Spinner />
 
