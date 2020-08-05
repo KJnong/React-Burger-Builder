@@ -69,21 +69,28 @@ export default class InfoData extends Component {
         event.preventDefault();
         this.setState({ loading: true })
 
+        const formData = {};
+
+        for (let formElementIdentifier in this.state.orderForm) {
+            formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value
+        }
+
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.price,
+            orderForm: formData
             
         }
 
 
-        // await axios.post("/orders.json", order)
-        // .then((response)=>{
-        //     this.setState({loading: false});
-        //     this.props.history.push("/")
+        await axios.post("/orders.json", order)
+        .then((response)=>{
+            this.setState({loading: false});
+            this.props.history.push("/")
 
-        // }).catch(error=>{
-        //     this.setState({loading: false});
-        // })
+        }).catch(error=>{
+            this.setState({loading: false});
+        })
 
 
     }
