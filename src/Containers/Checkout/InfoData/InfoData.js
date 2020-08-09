@@ -15,7 +15,13 @@ export default class InfoData extends Component {
                     type: "text",
                     placeholder: "Your Name"
                 },
-                value: ""
+                value: "",
+                validation: {
+                    required: true,
+                    minLength: 3,
+                    maxLength: 25
+                },
+                valid: false
             },
             email: {
                 elementType: 'input',
@@ -23,7 +29,14 @@ export default class InfoData extends Component {
                     type: "email",
                     placeholder: "Email"
                 },
-                value: ""
+                value: "",
+                validation: {
+                    required: true,
+                    minLength: 3,
+                    maxLength: 25
+                },
+                valid: false
+
             },
             street: {
                 elementType: 'input',
@@ -31,7 +44,11 @@ export default class InfoData extends Component {
                     type: "text",
                     placeholder: "Residential Adress"
                 },
-                value: ""
+                value: "",
+                validation: {
+                    required: true,
+                },
+                valid: false
             },
             city: {
                 elementType: 'input',
@@ -39,7 +56,11 @@ export default class InfoData extends Component {
                     type: "text",
                     placeholder: "City"
                 },
-                value: ""
+                value: "",
+                validation: {
+                    required: true,
+                },
+                valid: false
             },
             post: {
                 elementType: 'input',
@@ -47,7 +68,12 @@ export default class InfoData extends Component {
                     type: "text",
                     placeholder: "Zip Code"
                 },
-                value: ""
+                value: "",
+                validation: {
+                    required: true,
+                    
+                },
+                valid: false
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -63,6 +89,24 @@ export default class InfoData extends Component {
 
         },
         loading: false
+    }
+
+    checkValitity = (value, rules)=>{
+        let isValid = true;
+
+        if (rules.required) {
+            isValid = value.trim() !== '' && isValid;
+        }
+
+        if (rules.minLength) {
+            isValid = value.length >= rules.minLength && isValid;
+        }
+
+        if (rules.maxLength) {
+            isValid = value.length <= rules.maxLength && isValid;
+        }
+
+        return isValid;
     }
 
     OrderHandler = async (event) => {
@@ -100,6 +144,8 @@ export default class InfoData extends Component {
 
         const updatedFormElement = {...updatedOrderForm[inputIdentifier]}
         updatedFormElement.value= event.target.value;
+        updatedFormElement.valid = this.checkValitity(updatedFormElement.value, updatedFormElement.validation);
+        console.log(updatedFormElement);
         updatedOrderForm[inputIdentifier] = updatedFormElement;
         this.setState({orderForm: updatedOrderForm})
     }
