@@ -3,11 +3,16 @@ import classes from './Inputs.module.css'
 
 const inputs = (props)=> {
     let inputElement = null;
+    let classInput = [classes.InputElement]
+
+    if (props.valid && props.touched) {
+        classInput.push(classes.Invalid)
+    }
 
     switch (props.inputType) {
         case "input":
             inputElement= <input 
-                            className={classes.InputElement} 
+                            className={classInput.join(" ")} 
                             {...props.elementConfiq}
                             onChange={props.changed}
                             />
@@ -15,7 +20,7 @@ const inputs = (props)=> {
 
         case "textarea":
             inputElement= <textarea
-                             className={classes.InputElement} 
+                             className={classInput.join(" ")} 
                              {...props.elementConfiq}
                             onChange={props.changed} 
                              />

@@ -21,7 +21,8 @@ export default class InfoData extends Component {
                     minLength: 3,
                     maxLength: 25
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             email: {
                 elementType: 'input',
@@ -35,7 +36,8 @@ export default class InfoData extends Component {
                     minLength: 3,
                     maxLength: 25
                 },
-                valid: false
+                valid: false,
+                touched: false
 
             },
             street: {
@@ -48,7 +50,8 @@ export default class InfoData extends Component {
                 validation: {
                     required: true,
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             city: {
                 elementType: 'input',
@@ -60,7 +63,8 @@ export default class InfoData extends Component {
                 validation: {
                     required: true,
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             post: {
                 elementType: 'input',
@@ -73,7 +77,8 @@ export default class InfoData extends Component {
                     required: true,
                     
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -144,6 +149,7 @@ export default class InfoData extends Component {
 
         const updatedFormElement = {...updatedOrderForm[inputIdentifier]}
         updatedFormElement.value= event.target.value;
+        updatedFormElement.touched = true;
         updatedFormElement.valid = this.checkValitity(updatedFormElement.value, updatedFormElement.validation);
         console.log(updatedFormElement);
         updatedOrderForm[inputIdentifier] = updatedFormElement;
@@ -166,6 +172,8 @@ export default class InfoData extends Component {
                         key={formElement.id}
                         inputType={formElement.config.elementType}
                         elementConfiq={formElement.config.elementConfiq}
+                        valid={!formElement.config.valid}
+                        touched={formElement.config.touched}
                         value={formElement.config.value}
                         changed = {(event)=>this.inputChangedHandler(event,formElement.id)} />
                 ))}
