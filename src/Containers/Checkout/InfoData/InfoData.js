@@ -89,10 +89,13 @@ export default class InfoData extends Component {
                         {value: 'fastest', displayValue: 'Fastest'}
                     ]
                 },
+                validation: {},
+                valid:true,
                 value: ""
             }
 
         },
+        formIsValid: false ,
         loading: false
     }
 
@@ -151,9 +154,14 @@ export default class InfoData extends Component {
         updatedFormElement.value= event.target.value;
         updatedFormElement.touched = true;
         updatedFormElement.valid = this.checkValitity(updatedFormElement.value, updatedFormElement.validation);
-        console.log(updatedFormElement);
         updatedOrderForm[inputIdentifier] = updatedFormElement;
-        this.setState({orderForm: updatedOrderForm})
+
+        let formIsValid = true;
+        for (let inputIdentifier in updatedOrderForm) {
+                formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid
+            }
+
+        this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid})
     }
     render() {
 
@@ -177,7 +185,7 @@ export default class InfoData extends Component {
                         value={formElement.config.value}
                         changed = {(event)=>this.inputChangedHandler(event,formElement.id)} />
                 ))}
-                <Butten  btnType="Success">ORDER</Butten>
+                <Butten  btnType="Success" disabled={!this.state.formIsValid}>ORDER</Butten>
             </form>
         ) : <Spinner />
 
