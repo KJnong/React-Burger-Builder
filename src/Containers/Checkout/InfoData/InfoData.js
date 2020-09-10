@@ -4,8 +4,9 @@ import Butten from '../../../Components/UI/Button/Button'
 import Spinner from "../../../assets/Spinner/Spinner"
 import axios from "../../../axios-orders"
 import Input from '../../../Components/UI/Inputs/Inputs'
+import {connect} from 'react-redux'
 
-export default class InfoData extends Component {
+ class InfoData extends Component {
 
     state = {
         orderForm: {
@@ -199,3 +200,12 @@ export default class InfoData extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) =>{
+    return {
+        ingredients: state.ingredients, 
+        price: state.price
+    }
+}
+
+export default connect(mapStateToProps)(InfoData)

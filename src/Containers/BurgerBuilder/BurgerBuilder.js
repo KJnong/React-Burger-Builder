@@ -92,18 +92,9 @@ class BurgerBuilder extends Component {
     }
 
     continueOrderHandler = async () => {
-        
-        const queryParams = [];
-        for (let i in this.props.ingredients) {
-            queryParams.push(i + '=' + this.props.ingredients[i])
-        }
-
-        queryParams.push("price=" + this.state.price)
-        const queryString = queryParams.join('&');
 
         this.props.history.push({
-            pathname: "/checkout",
-            search: '?' + queryString
+            pathname: "/checkout"
         })
     }
 
